@@ -2,25 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Majors Filter</title>
+  <title>Student Majors</title>
   <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
   <style>
-    table {
-      border-collapse: collapse;
-      width: 50%;
-      margin-top: 20px;
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
     }
+
+    h1, h2 {
+      margin: 10px 0;
+    }
+
+    button {
+      margin-right: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 60%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
     th, td {
-      border: 1px solid #ccc;
       padding: 8px;
       text-align: left;
     }
   </style>
 </head>
 <body>
-  <h1>Student Majors</h1>
-  <button id="citBtn">CIT Majors</button>
-  <button id="busBtn">Business Majors</button>
+  <h1>Select a Major</h1>
+
+  <div>
+    <button id="citBtn">CIT Majors</button>
+    <button id="busBtn">Business Majors</button>
+  </div>
+
+  <h2>We filter our dataset by major</h2>
 
   <div id="tableContainer"></div>
 
@@ -51,19 +72,15 @@
   <script>
     let studentsData = [];
 
-    // Fetch the JSON file
     fetch('cit5students.json')
       .then(response => response.json())
       .then(data => {
         studentsData = data;
-
-        // Optional: display CIT majors by default
-        displayStudents("CIT");
+        displayStudents("CIT"); // Optional: show CIT by default
       });
 
     function displayStudents(majorType) {
       const filtered = studentsData.filter(student => student.major === majorType);
-
       const source = document.getElementById("student-template").innerHTML;
       const template = Handlebars.compile(source);
       const html = template(filtered);
