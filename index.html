@@ -30,6 +30,11 @@
     th, td {
       padding: 8px;
       text-align: left;
+      border: none; /* 🧼 NO borders */
+    }
+
+    thead {
+      font-weight: bold;
     }
   </style>
 </head>
@@ -76,7 +81,7 @@
       .then(response => response.json())
       .then(data => {
         studentsData = data;
-        displayStudents("CIT"); // Optional: show CIT by default
+        displayStudents("CIT");
       });
 
     function displayStudents(majorType) {
