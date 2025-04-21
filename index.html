@@ -1,99 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Student Majors</title>
-  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    h1, h2 {
-      margin: 10px 0;
-    }
-
-    button {
-      margin-right: 10px;
-      padding: 8px 16px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    table {
-      width: 60%;
-      margin-top: 20px;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 8px;
-      text-align: left;
-      border: none; /* 🧼 NO borders */
-    }
-
-    thead {
-      font-weight: bold;
-    }
-  </style>
+  <title>Majors Filter</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
 </head>
 <body>
-  <h1>Select a Major</h1>
 
-  <div>
-    <button id="citBtn">CIT Majors</button>
-    <button id="busBtn">Business Majors</button>
-  </div>
+<h1>Select a Major</h1>
 
-  <h2>We filter our dataset by major</h2>
+<button id="citBtn">CIT Majors</button>
+<button id="busBtn">Business Majors</button>
 
-  <div id="tableContainer"></div>
+<h2>We filter our dataset by major</h2>
 
-  <!-- Handlebars template -->
-  <script id="student-template" type="text/x-handlebars-template">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Major</th>
-          <th>Midterm</th>
-          <th>Final</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each this}}
-          <tr>
-            <td>{{name}}</td>
-            <td>{{major}}</td>
-            <td>{{midterm}}</td>
-            <td>{{final}}</td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </script>
+<div id="result"></div>
 
-  <script>
-    let studentsData = [];
+<!-- Handlebars template -->
+<script id="text-template" type="text/x-handlebars-template">
+<table>
+  <thead>
+    <tr><th>Name</th><th>Major</th><th>Midterm</th><th>Final</th></tr>
+  </thead>
+  <tbody>
+    {{#each students}}
+    <tr>
+      <td>{{name}}</td>
+      <td>{{major}}</td>
+      <td>{{midterm}}</td>
+      <td>{{final}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</script>
 
-    fetch('cit5students.json')
-      .then(response => response.json())
-      .then(data => {
-        studentsData = data;
-        displayStudents("CIT");
-      });
+<script>
+let studentsData = [];
 
-    function displayStudents(majorType) {
-      const filtered = studentsData.filter(student => student.major === majorType);
-      const source = document.getElementById("student-template").innerHTML;
-      const template = Handlebars.compile(source);
-      const html = template(filtered);
-      document.getElementById("tableContainer").innerHTML = html;
-    }
+fetch('cit5students.json')
+  .then(r => r.json())
+  .then(d => {
+    studentsData = d;
+    show_students("CIT");
+  });
 
-    document.getElementById("citBtn").addEventListener("click", () => displayStudents("CIT"));
-    document.getElementById("busBtn").addEventListener("click", () => displayStudents("BUS"));
-  </script>
+function show_students(major) {
+  let filtered = studentsData.filter(s => s.major === major);
+  let context = { students: filtered };
+
+  let source = document.getElementById('text-template').innerHTML;
+  let template = Handlebars.compile(source);
+  let html = template(context);
+
+  document.getElementById('result').innerHTML = html;
+}
+
+document.getElementById('citBtn').addEventListener('click', () => show_students("CIT"));
+document.getElementById('busBtn').addEventListener('click', () => show_students("BUS"));
+</script>
+
 </body>
 </html>
