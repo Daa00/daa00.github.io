@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Over 25</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Tickets Over 25 MPH</h1>
+    <div v-for="ticket in tickets" :key="ticket.id">
+      ID:{{ticket.id}} Speed:{{ticket.speed}} Posted:{{ticket.posted}} Over:{{ticket.over}} Date:{{ticket.date}} Time:{{ticket.time}} Location:{{ticket.location}}
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        tickets: []
+      },
+      mounted() {
+        fetch('tickets1.json')
+          .then(res => res.json())
+          .then(data => {
+            this.tickets = data.filter(ticket => ticket.over_25);
+          })
+          .catch(err => console.error('Error loading tickets1.json:', err));
+      }
+    });
+  </script>
+</body>
+</html>
