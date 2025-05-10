@@ -1,0 +1,30 @@
+[
+  {
+    "tid": "A001",
+    "stop_time": "2025-01-10T08:45:00Z",
+    "posted_speed": 35,
+    "actual_speed": 42,
+    "violator_sex": "F"
+  },
+  {
+    "tid": "A002",
+    "stop_time": "2025-01-11T09:30:00Z",
+    "posted_speed": 40,
+    "actual_speed": 70,
+    "violator_sex": "M"
+  },
+  {
+    "tid": "A003",
+    "stop_time": "2025-01-12T10:15:00Z",
+    "posted_speed": 30,
+    "actual_speed": 60,
+    "violator_sex": "F"
+  },
+  {
+    "tid": "A004",
+    "stop_time": "2025-01-13T11:00:00Z",
+    "posted_speed": 45,
+    "actual_speed": 50,
+    "violator_sex": "M"
+  }
+]
